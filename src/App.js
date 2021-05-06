@@ -8,8 +8,9 @@ import url from "./electricity.mp4"
 import { MeshStandardMaterial } from "three";
 import { BloomPass } from "three/examples/jsm/postprocessing/BloomPass"
 import { GlitchPass } from "three/examples/jsm/postprocessing/GlitchPass"
+import { WaterPass } from "./WaterPass"
 
-extend({ BloomPass, GlitchPass })
+extend({ BloomPass, GlitchPass, WaterPass })
 
 
 const Floor = () => {
@@ -31,7 +32,6 @@ const TV = () => {
     vid.loop = true;
     vid.muted = true;
     vid.play();
-    console.log('hi dad')
     return vid
   });
 
@@ -55,12 +55,14 @@ export default function App() {
   return (
     <Canvas>
       <Effects>
+        <waterPass attachArray="passes" factor={1} />
         <bloomPass attachArray="passes" />
         <glitchPass attachArray="passes" />
       </Effects>
       <fog attach="fog" args={["black", 1, 7]} />
       <OrbitControls maxPolarAngle={Math.PI / 2} minPolarAngle={0} />
-      <directionalLight intensity={0.5} />
+      <directionalLight intensity={0.05} />
+      <pointLight intensity={0.2} position={[1, 3, -2]} color="red" />
       <Suspense fallback={null}>
         <TV />
       </Suspense>
