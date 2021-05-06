@@ -1,8 +1,10 @@
-import React, { useRef, Suspense } from "react";
+import React, { useRef, Suspense, useState } from "react";
 import { Canvas, useFrame } from "react-three-fiber";
 import { OrbitControls, useGLTF } from "drei";
+import * as THREE from "three";
 import { Box } from "@react-three/drei/shapes";
 import "./styles.css";
+import url from "./electricity.mp4"
 import { MeshStandardMaterial } from "three";
 
 const Floor = () => {
@@ -16,10 +18,29 @@ const Floor = () => {
 
 const TV = () => {
   const { nodes } = useGLTF('tv.gltf')
+
+  const [video] = useState(() => {
+    const vid = document.createElement("video");
+    vid.src = url;
+    vid.crossOrigin = "Anonymous";
+    vid.loop = true;
+    vid.muted = true;
+    vid.play();
+    console.log('hi dad')
+    return vid
+  });
+
   return (
     <group rotation={[Math.PI / 8, Math.PI * 1.2, 0]}>
       <mesh geometry={nodes.TV.geometry}>
         <meshStandardMaterial color="white" />
+      </mesh>
+      <mesh rotation={[0, 0, 0]} position={[0, 0, 1.1]}>
+        <planeGeometry args={[3.2, 1.9]} />
+        <meshStandardMaterial emissive={"white"} side={THREE.DoubleSide}>
+          <videoTexture attach="map" args={[video]} />
+          <videoTexture attach="emissiveMap" args={[video]} />
+        </meshStandardMaterial>
       </mesh>
     </group>
   )
