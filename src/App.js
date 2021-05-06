@@ -62,7 +62,7 @@ export default function App() {
       <fog attach="fog" args={["black", 1, 7]} />
       <OrbitControls maxPolarAngle={Math.PI / 2} minPolarAngle={0} />
       <directionalLight intensity={0.05} />
-      <pointLight intensity={0.2} position={[1, 3, -2]} color="red" />
+      <pointLight intensity={0.2} position={[1, 5, 0]} color="blue" />
       <Suspense fallback={null}>
         <TV />
       </Suspense>
