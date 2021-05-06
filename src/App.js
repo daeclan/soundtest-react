@@ -1,11 +1,16 @@
 import React, { useRef, Suspense, useState } from "react";
-import { Canvas, useFrame } from "react-three-fiber";
-import { OrbitControls, useGLTF } from "drei";
+import { Canvas, useFrame, extend } from "react-three-fiber";
+import { OrbitControls, useGLTF, Effects } from "drei";
 import * as THREE from "three";
 import { Box } from "@react-three/drei/shapes";
 import "./styles.css";
 import url from "./electricity.mp4"
 import { MeshStandardMaterial } from "three";
+import { BloomPass } from "three/examples/jsm/postprocessing/BloomPass"
+import { GlitchPass } from "three/examples/jsm/postprocessing/GlitchPass"
+
+extend({ BloomPass, GlitchPass })
+
 
 const Floor = () => {
   return (
@@ -49,6 +54,10 @@ const TV = () => {
 export default function App() {
   return (
     <Canvas>
+      <Effects>
+        <bloomPass attachArray="passes" />
+        <glitchPass attachArray="passes" />
+      </Effects>
       <fog attach="fog" args={["black", 1, 7]} />
       <OrbitControls maxPolarAngle={Math.PI / 2} minPolarAngle={0} />
       <directionalLight intensity={0.5} />
