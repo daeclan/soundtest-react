@@ -51,35 +51,6 @@ const TV = () => {
   )
 }
 
-const EV = () => {
-  const { nodes } = useGLTF('tv.gltf')
-
-  const [video] = useState(() => {
-    const vid = document.createElement("video");
-    vid.src = url;
-    vid.crossOrigin = "Anonymous";
-    vid.loop = true;
-    vid.muted = true;
-    vid.play();
-    return vid
-  });
-
-  return (
-    <group rotation={[Math.PI / 4, Math.PI * 1.5, 3.8]} position={[0, 0, 0.8]} >
-      <mesh geometry={nodes.TV.geometry}>
-        <meshStandardMaterial color="white" />
-      </mesh>
-      <mesh rotation={[0, 0, 0]} position={[0, 0, 1.1]}>
-        <planeGeometry args={[3.2, 1.9]} />
-        <meshStandardMaterial emissive={"white"} side={THREE.DoubleSide}>
-          <videoTexture attach="map" args={[video]} />
-          <videoTexture attach="emissiveMap" args={[video]} />
-        </meshStandardMaterial>
-      </mesh>
-    </group>
-  )
-}
-
 export default function App() {
   return (
     <Canvas>
@@ -94,7 +65,6 @@ export default function App() {
       <pointLight intensity={0.2} position={[1, 5, 0]} color="blue" />
       <Suspense fallback={null}>
         <TV />
-        <EV />
       </Suspense>
       <Floor />
     </Canvas>
